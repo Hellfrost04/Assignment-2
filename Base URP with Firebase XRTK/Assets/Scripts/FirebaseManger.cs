@@ -13,7 +13,7 @@ public class FirebaseManger : MonoBehaviour
 {
     DatabaseReference dbPlayerStatsReference;
     DatabaseReference dbLeaderBoardRefernce;
-
+    private float level ;
     public void Awake()
     {
         InitialiazeFirebase();
@@ -25,7 +25,7 @@ public class FirebaseManger : MonoBehaviour
 
     }
     
-    public void UpdatePlayerStats(string uuid,int xp,int lvl, int shortestTimeTaken,int recentTimeTaken,int numberOfThingsShot, int numberOfTries,int time, string displayName)
+    public void UpdatePlayerStats(string uuid,int xp,int lvl, int shortestTimeTaken,int recentTimeTaken,int numberOfThingsShot, int numberOfTries, int timePlayed, string displayName)
     {
         Query playerQuery = dbPlayerStatsReference.Child(uuid);
 
@@ -48,22 +48,24 @@ public class FirebaseManger : MonoBehaviour
 
                     //create a temp object sp which stores info from player stats
                     DuckPlayerStats sp = JsonUtility.FromJson<DuckPlayerStats>(playerStats.GetRawJsonValue());
-                    sp.xp += 10;
-                    sp.lvl = lvl;
+                    sp.xp += 100;
+                    level = sp.xp / 300;
+                    sp.lvl = Mathf.FloorToInt(level);
                     sp.recentTimeTaken = recentTimeTaken;
                     sp.numberOfTries += 1;
-                    sp.numberOfThingsShot += numberOfThingsShot;
-                    sp.totalTimeSpent += time;
+                    sp.numberOfThingsShot += 3;
+                    sp.totalTimeSpent += timePlayed;
                     sp.updatedOn = sp.GetTimeUnix();
-
+                    
                     //check if there's a new highscore
-                    if (recentTimeTaken >sp.shortestTimeTaken)
-                    {
-                       
-                        sp.lvl = lvl;
+                    if (recentTimeTaken <sp.shortestTimeTaken)
+                    {   
+                        
+                        sp.lvl = Mathf.FloorToInt(level);
                         sp.shortestTimeTaken = shortestTimeTaken;
-                        UpdatePlayerLeaderBoardEntry(uuid, sp.shortestTimeTaken, sp.lvl, sp.updatedOn);
+                        UpdatePlayerLeaderBoardEntry(uuid,sp.lvl, sp.shortestTimeTaken, sp.updatedOn);
                     }
+
 
                     //update with entire temp sp object
                     //path: playerStats/$uuid
@@ -73,7 +75,7 @@ public class FirebaseManger : MonoBehaviour
                 {
                     //create player stats
                     //if there's no existing data, it's our first time player
-                    DuckPlayerStats sp = new DuckPlayerStats(displayName, xp, lvl, shortestTimeTaken, recentTimeTaken,numberOfTries , numberOfThingsShot, time);
+                    DuckPlayerStats sp = new DuckPlayerStats(displayName, xp, lvl, shortestTimeTaken, recentTimeTaken, numberOfTries , numberOfThingsShot, timePlayed);
 
                     DuckLeaderBoard lb = new DuckLeaderBoard(displayName,shortestTimeTaken, lvl );
 
@@ -134,8 +136,8 @@ public class FirebaseManger : MonoBehaviour
 
         //path: leaderboards/$uuid/highscore
         //path: leaderboards/$uuid/updatedOn
-        dbLeaderBoardRefernce.Child(uuid).Child("shortestTimeTake").SetValueAsync(shortestTimeTaken);
         dbLeaderBoardRefernce.Child(uuid).Child("lvl").SetValueAsync(lvl);
+        dbLeaderBoardRefernce.Child(uuid).Child("shortestTimeTakem").SetValueAsync(shortestTimeTaken);
         dbLeaderBoardRefernce.Child(uuid).Child("updatedOn").SetValueAsync(updatedOn);
     }
     /// <summary>
