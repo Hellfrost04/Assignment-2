@@ -14,8 +14,9 @@ public class PlayerHealth : MonoBehaviour
     public int numberOfTries;
     public int xp;
     public int lvl;
-    public GameObject GameUI;
+    public GameObject GameUIMenu;
     public GameObject DeathMenu;
+    public GameObject EndGameMenu;
 
     void Start()
     {
@@ -32,7 +33,15 @@ public class PlayerHealth : MonoBehaviour
         if (collision.gameObject.CompareTag("Destructible"))
         {
             Destroy(collision.gameObject);
-            Destroy(gameObject);
+            DeathMenu.SetActive(true);
+            GameUIMenu.SetActive(false);
+            deathEffect();
+        }
+           if (collision.gameObject.CompareTag("End"))
+        {
+            Destroy(collision.gameObject);
+            EndGameMenu.SetActive(true);
+            GameUIMenu.SetActive(false);
             deathEffect();
         }
     }
@@ -49,8 +58,6 @@ public class PlayerHealth : MonoBehaviour
 
         }
         isPlayerStatsUpdated = true;
-        DeathMenu.SetActive(true);
-        GameUI.SetActive(false);
     }
     public void UpdatePlayerStat(int xp, int lvl, int shortestTimeTaken, int recentTimeTaken, int numberOfThingsShot, int numberOfTries, int time)
     {
