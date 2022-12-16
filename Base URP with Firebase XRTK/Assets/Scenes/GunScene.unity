@@ -194,10 +194,6 @@ MonoBehaviour:
   bulletOrigin: {fileID: 260923809}
   bulletPrefab: {fileID: 5232348568687180905, guid: aa381664e27fe440bb5a485b4f528cb0,
     type: 3}
-  delayInSeconds: 0
-  canShoot: 0
-  Shot: 0
-  fireRate: 0.5
 --- !u!1 &507693683
 GameObject:
   m_ObjectHideFlags: 0
@@ -226,7 +222,7 @@ Transform:
   m_GameObject: {fileID: 507693683}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 0.81, y: 0.81, z: 0.81}
   m_ConstrainProportionsScale: 1
   m_Children: []
   m_Father: {fileID: 1982072024}
@@ -1224,7 +1220,7 @@ PrefabInstance:
     - target: {fileID: 6598815579406187037, guid: 9f5a24a380916d14db9775daab4fe333,
         type: 3}
       propertyPath: m_IsActive
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 9f5a24a380916d14db9775daab4fe333, type: 3}
@@ -2011,8 +2007,8 @@ Transform:
   m_GameObject: {fileID: 1982072023}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0.695}
-  m_LocalScale: {x: 0.13, y: 0.13, z: 0.13}
-  m_ConstrainProportionsScale: 1
+  m_LocalScale: {x: 0.16604994, y: 0.16604994, z: 0.16604994}
+  m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 507693684}
   m_Father: {fileID: 0}
@@ -2026,7 +2022,7 @@ BoxCollider:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1982072023}
   m_Material: {fileID: 0}
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_Enabled: 1
   serializedVersion: 2
   m_Size: {x: 1, y: 1, z: 1}
