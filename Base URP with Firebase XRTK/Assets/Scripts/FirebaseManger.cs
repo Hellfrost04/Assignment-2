@@ -53,7 +53,7 @@ public class FirebaseManger : MonoBehaviour
                     sp.lvl = Mathf.FloorToInt(level);
                     sp.recentTimeTaken = recentTimeTaken;
                     sp.numberOfTries += 1;
-                    sp.numberOfThingsShot += 3;
+                    sp.numberOfThingsShot += 13;
                     sp.totalTimeSpent += timePlayed;
                     sp.updatedOn = sp.GetTimeUnix();
                     
