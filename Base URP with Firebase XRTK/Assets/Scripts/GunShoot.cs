@@ -10,6 +10,6 @@ public class GunShoot : MonoBehaviour
     public void Fire()
     {
         GameObject newBullet = Instantiate(bulletPrefab, bulletOrigin.position, transform.rotation);
-        newBullet.GetComponent<Rigidbody>().AddForce(bulletOrigin.forward * 300f);
+        newBullet.GetComponent<Rigidbody>().AddForce(bulletOrigin.forward * 500f);
     }
 }
