@@ -53,7 +53,7 @@ public class FirebaseManger : MonoBehaviour
                     sp.lvl = Mathf.FloorToInt(level);
                     sp.recentTimeTaken = recentTimeTaken;
                     sp.numberOfTries += 1;
-                    sp.numberOfThingsShot += numberOfThingsShot;
+                    sp.numberOfThingsShot += Bullet.shots;
                     sp.totalTimeSpent += timePlayed;
                     sp.updatedOn = sp.GetTimeUnix();
                     
@@ -63,7 +63,7 @@ public class FirebaseManger : MonoBehaviour
                         
                         sp.lvl = Mathf.FloorToInt(level);
                         sp.shortestTimeTaken = shortestTimeTaken;
-                        UpdatePlayerLeaderBoardEntry(uuid,sp.lvl, sp.shortestTimeTaken, sp.updatedOn);
+                        UpdatePlayerLeaderBoardEntry(uuid, sp.lvl, sp.shortestTimeTaken, sp.updatedOn);
                     }
 
 
@@ -75,7 +75,7 @@ public class FirebaseManger : MonoBehaviour
                 {
                     //create player stats
                     //if there's no existing data, it's our first time player
-                    DuckPlayerStats sp = new DuckPlayerStats(displayName, xp, lvl, shortestTimeTaken, recentTimeTaken, numberOfTries , numberOfThingsShot, timePlayed);
+                    DuckPlayerStats sp = new DuckPlayerStats(displayName, lvl, numberOfThingsShot, numberOfTries, recentTimeTaken, shortestTimeTaken, timePlayed,xp);
 
                     DuckLeaderBoard lb = new DuckLeaderBoard(displayName,shortestTimeTaken, lvl );
 
@@ -131,13 +131,13 @@ public class FirebaseManger : MonoBehaviour
 
         return leaderBoardList;
     }
-    public void UpdatePlayerLeaderBoardEntry(string uuid ,int shortestTimeTaken, int lvl, long updatedOn)
+    public void UpdatePlayerLeaderBoardEntry(string uuid , int lvl,int shortestTimeTaken, long updatedOn)
     {   
 
         //path: leaderboards/$uuid/highscore
         //path: leaderboards/$uuid/updatedOn
         dbLeaderBoardRefernce.Child(uuid).Child("lvl").SetValueAsync(lvl);
-        dbLeaderBoardRefernce.Child(uuid).Child("shortestTimeTakem").SetValueAsync(shortestTimeTaken);
+        dbLeaderBoardRefernce.Child(uuid).Child("shortestTimeTaken").SetValueAsync(shortestTimeTaken);
         dbLeaderBoardRefernce.Child(uuid).Child("updatedOn").SetValueAsync(updatedOn);
     }
     /// <summary>

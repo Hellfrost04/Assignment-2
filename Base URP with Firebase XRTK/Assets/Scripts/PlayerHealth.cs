@@ -10,18 +10,19 @@ public class PlayerHealth : MonoBehaviour
     public bool isPlayerStatsUpdated;
     public int recentTimeTaken;
     public int shortestTimeTaken;
-    public int numberOfThingsShots;
+    public int numberOfThingsShot;
     public int numberOfTries;
     public int xp;
     public int lvl;
+    public static int shots;
     public GameObject GameUIMenu;
     public GameObject DeathMenu;
     public GameObject EndGameMenu;
 
 
     void Start()
-    {
-        numberOfThingsShots = 0;
+    {   
+        Bullet.shots = 0;
         numberOfTries = 0;
         shortestTimeTaken = 0;
         recentTimeTaken = 0;
@@ -49,10 +50,11 @@ public class PlayerHealth : MonoBehaviour
     public void deathEffect()
     {
         Time.timeScale = 0;
+        
         int recentTimeTaken = Mathf.RoundToInt(GameUI.time);
         int shortestTimeTaken = Mathf.RoundToInt(GameUI.time);
         int timePlayed = Mathf.RoundToInt(GameUI.time);
-        int numberOfThingsShot = Bullet.shots;
+        
 
         if (!isPlayerStatsUpdated)
         {
